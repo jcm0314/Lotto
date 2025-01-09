@@ -1,10 +1,16 @@
-<h1>당첨 확인</h1>
+<h1>당첨 결과 확인</h1>
 <ul>
     {% for result in results %}
         <li>
-            번호: {{ result.ticket.numbers }} - 
-            맞춘 개수: {{ result.matched }} - 
-            {% if result.is_winner %} 당첨! {% else %} 미당첨 {% endif %}
+            로또 번호: {{ result.ticket.numbers }} <br>
+            맞춘 개수: {{ result.matched }} <br>
+            {% if result.is_winner %}
+                <strong>축하합니다! 당첨되었습니다!</strong>
+            {% else %}
+                아쉽지만 당첨되지 않았습니다.
+            {% endif %}
         </li>
+        <hr>
     {% endfor %}
 </ul>
+
