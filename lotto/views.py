@@ -34,4 +34,10 @@ def check_results(request):
 
 def home(request):
     return render(request, 'lotto/home.html')
+
+def my_tickets(request):
+    return render(request, 'lotto/my_tickets.html')
+
+def index(request):
+    return render(request, 'lotto/index.html')
 # Create your views here.
