@@ -1,0 +1,10 @@
+<h1>당첨 확인</h1>
+<ul>
+    {% for result in results %}
+        <li>
+            번호: {{ result.ticket.numbers }} - 
+            맞춘 개수: {{ result.matched }} - 
+            {% if result.is_winner %} 당첨! {% else %} 미당첨 {% endif %}
+        </li>
+    {% endfor %}
+</ul>
