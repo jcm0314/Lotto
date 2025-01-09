@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.urls import path
 from lotto import views
-from lotto.views import check_results
+from lotto.views import check_results, home
 from django.contrib import admin
 
 app_name = 'lotto'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home, name='home'),
     path('buy/', views.buy_lotto, name='buy_lotto'),
     path('check-result/', views.check_results, name='check_results'),
 ]

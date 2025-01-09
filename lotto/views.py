@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import LottoTicket
+from .models import LottoDraw
 from .utils import generate_lotto_numbers
 
 def buy_lotto(request):
@@ -31,4 +32,6 @@ def check_results(request):
     results = check_winning_numbers(request.user)
     return render(request, 'lotto/check_results.html', {'results': results})
 
+def home(request):
+    return render(request, 'lotto/home.html')
 # Create your views here.

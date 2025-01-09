@@ -16,5 +16,7 @@ class LottoDraw(models.Model):
     def __str__(self):
         return f"Draw {self.id}: {self.winning_numbers}"
 
-
+class LottoDraw(models.Model):
+    draw_date = models.DateField()
+    winning_numbers = models.CharField(max_length=255)
 # Create your models here.
