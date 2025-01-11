@@ -30,36 +30,35 @@ def check_winning_numbers(user):
     return results
 
 def check_results(request):
-    # 최근 추첨 번호 가져오기
     try:
         latest_draw = LottoDraw.objects.latest('draw_date')
     except LottoDraw.DoesNotExist:
-        return render(request, 'lotto/no_draw.html')  # 추첨이 아직 없는 경우
+        return render(request, 'lotto/no_draw.html', {'message': '아직 당첨 번호가 없습니다.'})
 
-    user_tickets = LottoTicket.objects.filter(user=request.user)  # 사용자의 티켓을 가져옴
+    user_tickets = LottoTicket.objects.filter(user=request.user)
     results = []
 
     for ticket in user_tickets:
         ticket_numbers = set(map(int, ticket.numbers.split(',')))
         winning_numbers = set(map(int, latest_draw.winning_numbers.split(',')))
-        matched = ticket_numbers & winning_numbers
-        is_winner = ticket_numbers == winning_numbers
+        matched_numbers = ticket_numbers & winning_numbers
+        is_winner = len(matched_numbers) == len(winning_numbers)
 
         results.append({
-            'ticket': ticket,
-            'matched': len(matched),
+            'ticket': ticket.numbers,
+            'matched_count': len(matched_numbers),
+            'matched_numbers': sorted(matched_numbers),
             'is_winner': is_winner,
-            'matched_numbers': sorted(list(matched)),
         })
 
-    return render(request, 'lotto/check_results.html', {'results': results})
-
+    return render(request, 'lotto/check_results.html', {'results': results, 'latest_draw': latest_draw})
 
 def home(request):
     return render(request, 'lotto/home.html')
 
 def my_tickets(request):
-    return render(request, 'lotto/my_tickets.html')
+    user_tickets = LottoTicket.objects.filter(user=request.user)  # 로그인한 사용자 티켓 조회
+    return render(request, 'lotto/my_tickets.html', {'tickets': user_tickets})
 
 def index(request):
     return render(request, 'lotto/index.html')
@@ -74,14 +73,33 @@ def draw_lotto(request):
     else:
         return redirect('login')  # 관리자 아닐 시 로그인 페이지로 리디렉션
 
+# views.py
 def statistics(request):
-    total_tickets = LottoTicket.objects.count()  # 총 티켓 판매량
-    latest_draw = LottoDraw.objects.latest('draw_date')  # 최근 추첨 정보
-    total_winners = LottoTicket.objects.filter(
-        numbers__in=[latest_draw.winning_numbers]).count()  # 당첨된 티켓 수
+    if not request.user.is_staff:
+        return redirect('login')
+
+    total_tickets = LottoTicket.objects.count()
+    try:
+        latest_draw = LottoDraw.objects.latest('draw_date')
+    except LottoDraw.DoesNotExist:
+        latest_draw = None
+
+    if latest_draw:
+        winning_numbers = set(map(int, latest_draw.winning_numbers.split(',')))
+        winners = []
+        for ticket in LottoTicket.objects.all():
+            ticket_numbers = set(map(int, ticket.numbers.split(',')))
+            matched_count = len(ticket_numbers & winning_numbers)
+            winners.append((ticket, matched_count))
+
+        winners = sorted(winners, key=lambda x: x[1], reverse=True)  # 매칭 개수로 정렬
+    else:
+        winners = []
+
     return render(request, 'lotto/statistics.html', {
         'total_tickets': total_tickets,
-        'total_winners': total_winners,
         'latest_draw': latest_draw,
+        'winners': winners,
     })
+
 # Create your views here.

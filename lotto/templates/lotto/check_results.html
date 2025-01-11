@@ -1,16 +1,22 @@
-<h1>당첨 결과 확인</h1>
-<ul>
+{% extends 'lotto/base.html' %}  <!-- base.html을 상속 -->
+
+{% block title %}당첨 결과{% endblock %}  <!-- 페이지 제목을 덮어씁니다. -->
+
+{% block content %}
+    <h1>Your Lotto Results</h1>
+    <p>Latest Draw: {{ latest_draw.winning_numbers }}</p>
+
     {% for result in results %}
-        <li>
-            로또 번호: {{ result.ticket.numbers }} <br>
-            맞춘 개수: {{ result.matched_numbers }} <br>
-            {% if result.is_winner %}
-                <strong>축하합니다! 당첨되었습니다!</strong>
-            {% else %}
-                아쉽지만 당첨되지 않았습니다.
-            {% endif %}
-        </li>
-        <hr>
+    <div>
+        <p>Ticket: {{ result.ticket }}</p>
+        <p>Matched Numbers: {{ result.matched_numbers }}</p>
+        <p>Matched Count: {{ result.matched_count }}</p>
+        {% if result.is_winner %}
+            <p>Congratulations! You won!</p>
+        {% else %}
+            <p>Sorry, better luck next time!</p>
+        {% endif %}
+    </div>
     {% endfor %}
-</ul>
+{% endblock %}
 

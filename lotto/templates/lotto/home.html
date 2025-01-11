@@ -1,10 +1,31 @@
+<!-- home.html 또는 index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Lotto Service</title>
 </head>
 <body>
     <h1>로또 서비스에 오신 것을 환영합니다!</h1>
-    <p>로또를 구매하거나 당첨 결과를 확인하려면 위 메뉴를 이용하세요.</p>
+    <p>로또를 구매하거나 당첨 결과를 확인하려면 아래 버튼을 이용하세요.</p>
+    
+    <!-- 로또 구매 버튼 -->
+    <a href="{% url 'lotto:buy_lotto' %}">
+        <button>로또 구매하기</button>
+    </a>
+
+    <!-- 당첨 결과 확인 버튼 -->
+    <a href="{% url 'lotto:check_results' %}">
+        <button>당첨 결과 확인</button>
+    </a>
+
+    <!-- 관리자일 경우 통계 보기 버튼 -->
+    {% if user.is_staff %}
+    <a href="{% url 'lotto:statistics' %}">
+        <button>당첨자 통계 보기</button>
+    </a>
+    {% endif %}
 </body>
 </html>
+
