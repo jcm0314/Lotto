@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import LottoDraw
+from .models import LottoTicket, LottoDraw
 from .utils import generate_lotto_numbers
 
 class LottoDrawAdmin(admin.ModelAdmin):
@@ -13,8 +13,6 @@ class LottoDrawAdmin(admin.ModelAdmin):
 admin.site.register(LottoDraw, LottoDrawAdmin)
 
 
-from django.contrib import admin
-from .models import LottoTicket
 
 class LottoTicketAdmin(admin.ModelAdmin):
     list_display = ['user', 'numbers', 'purchase_date']

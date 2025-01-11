@@ -3,7 +3,7 @@
     {% for result in results %}
         <li>
             로또 번호: {{ result.ticket.numbers }} <br>
-            맞춘 개수: {{ result.matched }} <br>
+            맞춘 개수: {{ result.matched_numbers }} <br>
             {% if result.is_winner %}
                 <strong>축하합니다! 당첨되었습니다!</strong>
             {% else %}
