@@ -65,12 +65,14 @@ def index(request):
     return render(request, 'lotto/index.html')
 
 def draw_lotto(request):
-    if request.user.is_staff:
-	winning_numbers = sorted(random.sample(range(1, 46), 6))
-	draw = LottoDraw.objects.create(winning_numbers','.join(map(str, winning_numbers)))
-	return redirect('lotto:my_tickets')
+    if request.user.is_staff:  # 관리자만 접근 가능
+        # 1부터 45 사이의 숫자 중 6개를 랜덤으로 선택하여 정렬
+        winning_numbers = sorted(random.sample(range(1, 46), 6))  
+        # LottoDraw 모델에 당첨 번호 저장
+        draw = LottoDraw.objects.create(winning_numbers=','.join(map(str, winning_numbers)))
+        return redirect('lotto:my_tickets')  # 성공 시 티켓 페이지로 리디렉션
     else:
-	return redirect('login')
+        return redirect('login')  # 관리자 아닐 시 로그인 페이지로 리디렉션
 
 def statistics(request):
     total_tickets = LottoTicket.objects.count()  # 총 티켓 판매량
