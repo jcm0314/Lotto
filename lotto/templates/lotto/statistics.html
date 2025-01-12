@@ -1,0 +1,21 @@
+{% extends 'lotto/base.html' %}  <!-- base.html을 상속 -->
+
+{% block title %}통계 보기{% endblock %}  <!-- 페이지 제목을 덮어씁니다. -->
+
+{% block content %}
+    <h1>Statistics</h1>
+    <p>Total Tickets Sold: {{ total_tickets }}</p>
+
+    {% if latest_draw %}
+        <p>Latest Draw Numbers: {{ latest_draw.winning_numbers }}</p>
+        <h2>Winners</h2>
+        {% for ticket, matched_count in winners %}
+            <div>
+                <p>Ticket: {{ ticket.numbers }} | Matched: {{ matched_count }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No draw has been conducted yet.</p>
+    {% endif %}
+{% endblock %}
+

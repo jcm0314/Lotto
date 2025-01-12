@@ -1,0 +1,17 @@
+{% extends 'lotto/base.html' %}  <!-- base.html을 상속 -->
+
+{% block title %}내 로또 티켓{% endblock %}  <!-- 페이지 제목을 덮어씁니다. -->
+
+{% block content %}
+    <h1>Your Lotto Tickets</h1>
+    {% if tickets %}
+        <ul>
+            {% for ticket in tickets %}
+                <li>{{ ticket.numbers }} - Purchased on {{ ticket.purchase_date }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not purchased any tickets yet.</p>
+    {% endif %}
+{% endblock %}
+

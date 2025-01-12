@@ -1,0 +1,22 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}로또 서비스{% endblock %}</title>
+</head>
+<body>
+    <!-- 홈으로 돌아가기 버튼 -->
+    <a href="{% url 'home' %}">
+        <button>홈으로 돌아가기</button>
+    </a>
+
+    <!-- 페이지 내용이 들어갈 부분 -->
+    <div>
+        {% block content %}
+        <!-- 내용이 들어갑니다. -->
+        {% endblock %}
+    </div>
+</body>
+</html>

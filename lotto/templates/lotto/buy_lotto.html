@@ -1,0 +1,13 @@
+<!-- buy_lotto.html -->
+{% extends 'lotto/base.html' %}  <!-- base.html을 상속 -->
+
+{% block title %}로또 구매{% endblock %}  <!-- 페이지 제목을 덮어씀 -->
+
+{% block content %}
+    <h1>로또 구매</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">자동 구매</button>
+    </form>
+{% endblock %}
+
