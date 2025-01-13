@@ -2,7 +2,7 @@
 
 Django와 Docker를 시용하여 lotto 서비스 사이트를 구축하기
 
-- lotto 구매 (자동 또는 수동)
+- lotto 구매 (자동)
 
 - 관리자에 의한 lotto 당첨 번호 추첨
 
